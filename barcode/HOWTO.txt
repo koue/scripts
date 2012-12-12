@@ -1,0 +1,6 @@
+1. barcode.pl - create barcode image for all assets
+2. image.pl - create A4 format image with assets barcodes images
+3. pdf.pl - generate PDF file from A4 images (there is problem when try do print A4 image, with PDF everything is OK)
+
+Before run generate.sh script must collect assets attributes in list.txt and put this file in files directory.
+Load http://pma/edit/get_list.php its will generate list.txt file.
