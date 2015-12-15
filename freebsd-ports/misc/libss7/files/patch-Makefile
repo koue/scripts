@@ -1,0 +1,80 @@
+--- Makefile.orig	2012-09-26 18:58:26.000000000 +0300
++++ Makefile	2014-09-09 15:18:11.000000000 +0300
+@@ -20,7 +20,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ 
+-CC=gcc
++CC=cc
+ GREP=grep
+ AWK=awk
+ 
+@@ -44,10 +44,12 @@ STATIC_OBJS= \
+ DYNAMIC_OBJS= \
+ 	$(STATIC_OBJS)
+ CFLAGS ?= -g
+-CFLAGS += -Wall -Werror -Wstrict-prototypes -Wmissing-prototypes
++CFLAGS += -Wall -Werror -Wstrict-prototypes -Wmissing-prototypes -Wno-parentheses-equality
+ CFLAGS += -fPIC $(LIBSS7_OPT) $(COVERAGE_CFLAGS)
+-INSTALL_PREFIX=$(DESTDIR)
+-INSTALL_BASE=/usr
++#INSTALL_PREFIX=$(DESTDIR)
++#INSTALL_BASE=/usr
++INSTALL_PREFIX=$(PREFIX)
++INSTALL_BASE=
+ libdir?=$(INSTALL_BASE)/lib
+ ifneq ($(findstring Darwin,$(OSARCH)),)
+   SOFLAGS=$(LDFLAGS) -dynamic -bundle -Xlinker -macosx_version_min -Xlinker 10.4 -Xlinker -undefined -Xlinker dynamic_lookup -force_flat_namespace
+@@ -65,7 +67,8 @@ else
+ ifeq (${OSARCH},FreeBSD)
+ LDCONFIG_FLAGS=-m
+ #CFLAGS += -I../zaptel -I../zapata
+-INSTALL_BASE=/usr/local
++#INSTALL_BASE=/usr/local
++INSTALL_BASE=
+ endif
+ endif
+ ifeq (${OSARCH},SunOS)
+@@ -130,16 +133,19 @@ install: $(STATIC_LIBRARY) $(DYNAMIC_LIB
+ 	mkdir -p $(INSTALL_PREFIX)$(libdir)
+ 	mkdir -p $(INSTALL_PREFIX)$(INSTALL_BASE)/include
+ ifneq (${OSARCH},SunOS)
+-	install -m 644 libss7.h $(INSTALL_PREFIX)$(INSTALL_BASE)/include
+-	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
++	#install -m 644 libss7.h $(INSTALL_PREFIX)$(INSTALL_BASE)/include
++	#install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
++	$(BSD_INSTALL_DATA) libss7.h $(INSTALL_PREFIX)$(INSTALL_BASE)/include
++	$(BSD_INSTALL_PROGRAM) $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
+ 	#if [ -x /usr/sbin/sestatus ] && ( /usr/sbin/sestatus | grep "SELinux status:" | grep -q "enabled"); then /sbin/restorecon -v $(INSTALL_PREFIX)$(libdir)/$(DYNAMIC_LIBRARY); fi
+ 	( cd $(INSTALL_PREFIX)$(libdir) ; ln -sf $(DYNAMIC_LIBRARY) libss7.so)
+ ifeq ($(SONAME),1.0)
+ 	# Add this link for historic reasons
+ 	( cd $(INSTALL_PREFIX)$(libdir) ; ln -sf $(DYNAMIC_LIBRARY) libss7.so.1)
+ endif
+-	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
+-	if test $$(id -u) = 0; then $(LDCONFIG) $(LDCONFIG_FLAGS) $(INSTALL_PREFIX)$(libdir); fi
++	#install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
++	$(BSD_INSTALL_DATA) $(STATIC_LIBRARY) $(INSTALL_PREFIX)$(libdir)
++	#if test $$(id -u) = 0; then $(LDCONFIG) $(LDCONFIG_FLAGS) $(INSTALL_PREFIX)$(libdir); fi
+ else
+ 	install -f $(INSTALL_PREFIX)$(INSTALL_BASE)/include -m 644 libss7.h
+ 	install -f $(INSTALL_PREFIX)$(libdir) -m 755 $(DYNAMIC_LIBRARY)
+@@ -176,7 +182,8 @@ MAKE_DEPS= -MD -MT $@ -MF .$(subst /,_,$
+ 	$(CC) $(CFLAGS) $(MAKE_DEPS) -c -o $@ $<
+ 
+ %.lo: %.c
+-	$(CC) $(CFLAGS) $(MAKE_DEPS) -c -o $@ $<
++#	$(CC) $(CFLAGS) $(MAKE_DEPS) -c -o $@ $<
++	$(CC) $(CFLAGS) $(MAKE_DEPS) -fPIC -c -o $@ $<
+ 
+ $(STATIC_LIBRARY): $(STATIC_OBJS)
+ 	ar rcs $(STATIC_LIBRARY) $(STATIC_OBJS)
+@@ -184,7 +191,7 @@ $(STATIC_LIBRARY): $(STATIC_OBJS)
+ 
+ $(DYNAMIC_LIBRARY): $(DYNAMIC_OBJS)
+ 	$(CC) $(SOFLAGS) -o $@ $(DYNAMIC_OBJS)
+-	$(LDCONFIG) $(LDCONFIG_FLAGS) .
++	#$(LDCONFIG) $(LDCONFIG_FLAGS) .
+ 	ln -sf $(DYNAMIC_LIBRARY) libss7.so
+ ifeq ($(SONAME),1.0)
+ 	# Add this link for historic reasons
