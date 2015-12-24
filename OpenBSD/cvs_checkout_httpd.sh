@@ -11,3 +11,4 @@ cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libutil/imsg.h
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libssl/src/crypto/o_time.h
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libssl/src/crypto/asn1/a_time_tm.c
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libc/gen/vis.c
+cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/etc/examples/httpd.conf
