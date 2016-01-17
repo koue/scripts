@@ -9,6 +9,8 @@ COMMENT=	FastCGI interface for old CGI programs
 
 LICENSE=	BSD3CLAUSE
 
+LIB_DEPENDS=	libevent.so:${PORTSDIR}/devel/libevent2
+
 WRKSRC=		${WRKDIR}/${GH_PROJECT}-${PORTVERSION}/src/usr.sbin/${GH_PROJECT}
 
 USE_GITHUB=	yes
