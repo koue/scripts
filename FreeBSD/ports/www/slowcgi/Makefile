@@ -16,6 +16,7 @@ GH_ACCOUNT=	koue
 GH_PROJECT=	slowcgi
 
 USES=		uidfix
+USE_RC_SUBR=	slowcgi
 
 CFLAGS+=	-Wall
 
