@@ -1,0 +1,4 @@
+$ gcc -Wall -fPIC -c *.c
+$ gcc -shared -Wl,-soname,libhashes.so.1 -o libhashes.so.1.0   *.o
+$ gcc -Wall -L/opt/lib kruf.c -lhashes -o kruf
+

@@ -1,0 +1,99 @@
+# Blosxom Plugin: nosubdir 
+# Author(s): Nikola Kolev
+# Version: 2011-10-17blosxom2
+
+package nosubdir;
+
+# --- Configurable variables -----
+
+# --------------------------------
+use CGI qw/:standard/;
+
+# --------------------------------
+
+sub start {
+  # compatiblily with Fletcher T. Penney find plugin and wikieditish
+ ((param('plugin') eq 'find') || (param('find')) || (param('plugin') eq 'wikieditish')) ? 0 : 1 ;
+
+}
+
+sub filter {
+  my ($pkg, $files_ref) = @_;
+
+  if (($blosxom::path_info) && ( $blosxom::path_info !~ m#^(\d{4})#)) { $path = "/$blosxom::path_info" ;} else { $path = '';} ;
+
+  # if the path_info corresponds to a single story, we remember it,
+  # and we refer to the directory where our file is stored, 
+  $queried_file = "$blosxom::datadir$path";
+  if ( ! -d "$blosxom::datadir$path" ) {
+   $path =~ s#\/?[^\/]*$## ;
+   $queried_file =~ s/$blosxom::flavour$/$blosxom::file_extension/ ;
+   } else {
+	$queried_file .= "/";
+	};
+
+    foreach $ign_cf (keys %$files_ref) {
+	$ign_cf =~ m#(.*/)#;
+	if ( $1 ne $queried_file && $ign_cf ne $queried_file ) { delete $files_ref->{$ign_cf} ;  };	
+ 	}
+ 1;
+}
+  	 
+
+1;
+
+__DATA__
+__END__
+
+=head1 NAME
+
+Blosxom Plug-in: nosubdir 
+
+=head1 SYNOPSIS
+
+Purpose: show the files only in the current directory. Based on exclude plugin. 
+ 
+This file does not make any new variables available for use in template files.
+
+=head1 VERSION
+
+2011-10-17blosxom2
+
+Version number is the date on which this version of the plug-in was created.
+
+=head1 AUTHOR
+
+Nikola Kolev http://koue.chaosophia.net/
+
+=head1 BUGS
+
+Probably ;)
+
+=head1 CONFIGURATION
+
+No additional configuration options. Just put the file into blosxom plugin directory.
+
+=head1 LICENSE
+
+this Blosxom Plug-in
+Copyright 2011, Nikola Kolev 
+
+(This license is the same as Blosxom's)
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
