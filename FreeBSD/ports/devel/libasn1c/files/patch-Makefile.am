@@ -1,0 +1,9 @@
+--- Makefile.am.orig	2015-12-18 09:35:40 UTC
++++ Makefile.am
+@@ -4,5 +4,5 @@ ACLOCAL_AMFLAGS = -I m4
+ AM_CPPFLAGS = $(all_includes) -I$(top_srcdir)/include
+ SUBDIRS = src include
+ 
+-pkgconfigdir = $(libdir)/pkgconfig
++pkgconfigdir = $(libdir)data/pkgconfig
+ pkgconfig_DATA = libasn1c.pc
