@@ -3,6 +3,7 @@
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/usr.sbin/httpd
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/include/blf.h
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libc/crypt/bcrypt.c
+cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libc/crypt/blowfish.c
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libc/crypt/cryptutil.c
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libtls
 cvs -qd anoncvs@ftp5.eu.openbsd.org:/cvs get -P src/lib/libutil/imsg-buffer.c
