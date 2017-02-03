@@ -18,3 +18,4 @@ cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/gen/vis.c
 cvs -qd anoncvs@$SERVER:/cvs get -P src/etc/examples/httpd.conf
 cvs -qd anoncvs@$SERVER:/cvs get -P src/usr.bin/htpasswd
 cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/string/timingsafe_bcmp.c
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libcrypto/asn1/a_time_tm.c
