@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# shellbot.sh - IRC Bot
+# Author: Sean B. Palmer, inamidst.com
+
+NICK=shbot
+SERVER=${1:-irc.freenode.net}
+CHANNEL=${2:-#swhack}
+
+echo "NICK $NICK" > shellbot.input
+echo "USER $(whoami) +iw $NICK :$0" >> shellbot.input
+echo "JOIN $CHANNEL" >> shellbot.input
+
+tail -f shellbot.input | telnet $SERVER 6667 | \
+   while true
+   do read LINE || break
+
+      echo $LINE
+      if echo $LINE | egrep "$NICK: ping$" &> /dev/null
+      then echo "PRIVMSG $CHANNEL :pong" >> shellbot.input
+      fi
+   done
+
+# [EOF]
