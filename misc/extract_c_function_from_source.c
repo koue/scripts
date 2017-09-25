@@ -28,24 +28,26 @@
  *
  */
 
-/* $ cc -o whatever_you_want_to_name_me extract_c_function_from_source.c */
+/* $ cc -o whatever_you_want_to_call_me extract_c_function_from_source.c */
 
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void usage(void){
+void
+usage(void){
   extern char *__progname;
   printf("Usage: %s [pattern] [file]\n", __progname);
-  printf("Example: %s \"static int func(char *str)\" src.c\n", __progname);
+  printf("Example: %s \"func(char\" src.c\n", __progname);
+  printf("Example: %s \"int func(char *str)\" src.c\n", __progname);
   exit(1);
 }
 
 int main(int argc, char *argv[]){
   FILE *f;
-  char s[8192], pattern[128];
-  int found = 0, i, open =0, stop = 0;
+  char s[8192], tail[8192];
+  int found = 0, i, open =0, stop = 0, position, types = 0;
 
   if(argc!=3){
     usage();
@@ -56,29 +58,53 @@ int main(int argc, char *argv[]){
     return (1);
   }
 
+  for(i = 0; argv[1][i]; i++){
+        if(argv[1][i] == 0x20){		/* ' ' found, pattern contains types */
+		types = 1;
+		break;
+	}
+  }
+  if (!types)
+    snprintf(tail, sizeof(tail), "start\n");	/* default tail */
   while (fgets(s, sizeof(s), f) && !stop) {
     char *a, *b;
 
     for (a = s; (b = strstr(a, argv[1])) != NULL;){
-      found = 1;                 /* pattern found */
-      *b = 0;
-      printf("%s", argv[1]);     /* print the pattern */
-      a = b + strlen(argv[1]);   /* move string position after the pattern */
+      if(a[strlen(a)-2] != 0x3B){	/* ';' check it's not prototype */
+        position = b - a;	/* position of the pattern in the string */
+        found = 1;			/* pattern found */
+        *b = 0;
+        if (!types && !position) {	/* no types and pattern position is 0 */
+          printf("%s", tail);		/* print line before */
+	} else {
+          printf("%s", s);	/* print the string to pattern */
+        }
+        printf("%s", argv[1]);		/* print the pattern */
+      }
+      a = b + strlen(argv[1]);	/* move string position after the pattern */
     }
     if(found){
       for(i = 0; a[i]; i++){
-        if(a[i] == 0x7B){        /* '{' found, increase counter*/
+        if(a[i] == 0x7B){	/* '{' found, increase counter*/
           open++;
-        }else if(a[i] == 0x7D){  /* '}' found, decrease counter */
+        }else if(a[i] == 0x7D){	/* '}' found, decrease counter */
           open--;
-          if(open == 0){         /* last closing bracket of the function*/
-            stop = 1;
+          if(open == 0){	/* last closing bracket of the function*/
+            stop = 1;		/* not need to trace the file anymore */
             break;
           }
         }
       }
-      printf("%s", a);           /* print function content */
+      printf("%s", a);		/* print function content */
     }
+	/* if no types in pattern keep latest row before the function
+	 * declaration
+	 *
+	 * void
+	 * usage(void)
+	 */
+    if (!types)
+      snprintf(tail, sizeof(tail), "%s", s);
   }
   fclose(f);
 
