@@ -75,18 +75,21 @@ int main(int argc, char *argv[]){
     char *a, *b;
 
     for (a = s; (b = strstr(a, argv[1])) != NULL;){
-      if(a[strlen(a)-2] != 0x3B){	/* ';' check it's not prototype */
-        position = b - a;	/* position of the pattern in the string */
-        found = 1;			/* pattern found */
-        *b = 0;
-        if (!types && !position) {	/* no types and pattern position is 0 */
-          printf("%s", head);		/* print line before */
-	} else {
-          printf("%s", s);	/* print the string to pattern */
+      if (found == 0) {	/* don't check for pattern in the function itself */
+        if(a[strlen(a)-2] != 0x3B){	/* ';' check it's not prototype */
+          position = b - a;	/* position of the pattern in the string */
+          found = 1;			/* pattern found */
+          *b = 0;
+          if (!types && !position) {	/* no types and pattern position is 0 */
+            printf("%s", head);		/* print line before */
+	  } else {
+            printf("%s", s);	/* print the string to pattern */
+          }
+          printf("%s", argv[1]);		/* print the pattern */
         }
-        printf("%s", argv[1]);		/* print the pattern */
+        a = b + strlen(argv[1]);	/* move string position after the pattern */
       }
-      a = b + strlen(argv[1]);	/* move string position after the pattern */
+      break;
     }
     if(found){
       for(i = 0; a[i]; i++){
