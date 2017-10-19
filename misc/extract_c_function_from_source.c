@@ -46,7 +46,7 @@ usage(void){
 
 int main(int argc, char *argv[]){
   FILE *f;
-  char s[8192], tail[8192];
+  char s[8192], head[8192];
   int found = 0, i, open =0, stop = 0, position, types = 0;
 
   if(argc!=3){
@@ -58,14 +58,19 @@ int main(int argc, char *argv[]){
     return (1);
   }
 
-  for(i = 0; argv[1][i]; i++){
+  /* check for ' ' before '(' in the pattern
+  **
+  ** char func(
+  ** void func
+  */
+  for(i = 0; (argv[1][i] && argv[1][i] != 0x28); i++){
         if(argv[1][i] == 0x20){		/* ' ' found, pattern contains types */
 		types = 1;
 		break;
 	}
   }
   if (!types)
-    snprintf(tail, sizeof(tail), "start\n");	/* default tail */
+    snprintf(head, sizeof(head), "start\n");	/* default head */
   while (fgets(s, sizeof(s), f) && !stop) {
     char *a, *b;
 
@@ -75,7 +80,7 @@ int main(int argc, char *argv[]){
         found = 1;			/* pattern found */
         *b = 0;
         if (!types && !position) {	/* no types and pattern position is 0 */
-          printf("%s", tail);		/* print line before */
+          printf("%s", head);		/* print line before */
 	} else {
           printf("%s", s);	/* print the string to pattern */
         }
@@ -104,7 +109,7 @@ int main(int argc, char *argv[]){
 	 * usage(void)
 	 */
     if (!types)
-      snprintf(tail, sizeof(tail), "%s", s);
+      snprintf(head, sizeof(head), "%s", s);
   }
   fclose(f);
 
