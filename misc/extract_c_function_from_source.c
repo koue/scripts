@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){
         }
         a = b + strlen(argv[1]);	/* move string position after the pattern */
       }
-      break;
+      break; /* avoid printing same line infinitely if function contains pattern itself */
     }
     if(found){
       for(i = 0; a[i]; i++){
