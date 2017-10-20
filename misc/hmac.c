@@ -95,3 +95,28 @@ void HMAC_encrypt_me(const char *zString, char **zResult){
   HMAC_CTX_cleanup(&ctx);
   *zResult = hmac_strdup(hmac_result);
 }
+
+/*
+** HMAC verify string.
+*/
+int HMAC_verify_me(const char *zString, const char *zResult){
+  char hmac_result[64];
+  unsigned char *result;
+  unsigned int len = 20;
+  HMAC_CTX ctx;
+
+  result = (unsigned char *)malloc(sizeof(char) * len);
+
+  HMAC_CTX_init(&ctx);
+  HMAC_Init_ex(&ctx, secret, strlen(secret), EVP_sha1(), NULL);
+  HMAC_Update(&ctx, (unsigned char*)zString, strlen(zString));
+  HMAC_Final(&ctx, result, &len);
+
+  for (int i = 0; i < len; i++)
+    snprintf(&hmac_result[i*2], sizeof(hmac_result), "%02x",
+						(unsigned int)result[i]);
+  free(result);
+  HMAC_CTX_cleanup(&ctx);
+
+  return(strncmp(zResult, hmac_result, 40));
+}

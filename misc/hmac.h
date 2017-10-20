@@ -32,6 +32,7 @@
 #define _HMAC_H
 
 void HMAC_encrypt_me(const char *zString, char **zResult);
+int HMAC_verify_me(const char *zString, const char *zResult);
 
 #endif
 
