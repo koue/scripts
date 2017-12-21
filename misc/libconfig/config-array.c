@@ -39,8 +39,8 @@ static int nUsedQP = 0;         /* Space actually used in aParamQP[] */
 static int sortQP = 0;          /* True if aParamQP[] needs sorting */
 static int seqQP = 0;           /* Sequence numbers */
 static struct QParam {		/* One entry for eachquery parameter or cookie */
-	const char *zName;	/* Parameter or cookie name */
-	const char *zValue;	/* Value of the query parameter or cookie */
+	char *zName;	/* Parameter or cookie name */
+	char *zValue;	/* Value of the query parameter or cookie */
 	int seq;		/* Order of insertion */
 } *aParamQP;			/* An array of all parameters and cookies */
 
@@ -67,6 +67,14 @@ void config_array_print(void){
 	}
 }
 
+void config_array_purge(void){
+	for(int i = 0; i < nUsedQP; i++){
+		free(aParamQP[i].zName);
+		free(aParamQP[i].zValue);
+	}
+	free(aParamQP);
+}
+
 /* This is the comparison function used to sort the aParamQP[] array */
 int qparam_compare(const void *a, const void *b){
 	struct QParam *pA = (struct QParam*)a;
@@ -79,7 +87,7 @@ int qparam_compare(const void *a, const void *b){
 	return (c);
 }
 
-const char *config_array_value_get(const char *zName){
+char *config_array_value_get(const char *zName){
 	int lo, hi, mid, c;
 	/* The sortQP flag is set whenever a new parameter is inserted.
 	** It indicates that we need to resort the parameters

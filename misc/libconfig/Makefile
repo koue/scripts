@@ -26,4 +26,4 @@ test-queue: test-queue.c configfile.h configfile.o config-queue.h config-queue.o
 	./test-queue
 
 clean:
-	rm -f libconfig.a *.o test-queue test-array
+	rm -f libconfig.a *.o *.core test-queue test-array

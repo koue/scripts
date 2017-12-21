@@ -32,5 +32,6 @@
 #define _CONFIG_ARRAY_H
 void config_array_cb(const char *name, const char *value);
 void config_array_print(void);
-const char *config_array_value_get(const char *name);
+char *config_array_value_get(const char *name);
+void config_array_purge(void);
 #endif

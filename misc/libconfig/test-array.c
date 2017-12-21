@@ -34,7 +34,8 @@
 #include "config-array.h"
 
 int main(void) {
-	const char *value;
+	char *value;
+
 	if (configfile_parse("./configrc", config_array_cb) == -1)
 		exit(1);
 	config_array_print();
@@ -42,6 +43,7 @@ int main(void) {
 	printf("param4 = %s\n", value);
 	value = config_array_value_get("param5");
 	printf("param5 = %s\n", value);
+	config_array_purge();
 
 	return (0);
 }
