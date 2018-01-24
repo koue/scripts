@@ -20,3 +20,12 @@ cvs -qd anoncvs@$SERVER:/cvs get -P src/usr.bin/htpasswd
 #cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/string/timingsafe_bcmp.c
 #cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/string/timingsafe_memcmp.c
 #cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libcrypto/asn1/a_time_tm.c
+###
+# libevent
+###
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libevent
+cvs -qd anoncvs@$SERVER:/cvs get -P src/include/asr.h
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/stdlib/reallocarray.c
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/stdlib/recallocarray.c
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/asr/asr.c
+cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libc/asr/asr_private.h
