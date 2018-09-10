@@ -13,6 +13,7 @@
 bear make CC=/usr/local/bin/clang60
 /usr/local/llvm60/share/clang/run-clang-tidy.py \
 	-checks="*" \
+	-header-filter=".*" \
 	-clang-tidy-binary /usr/local/bin/clang-tidy60 > tidy.txt
 #	-clang-apply-replacements-binary /usr/local/bin/clang-apply-replacements60 \
 #	-fix > tidy.txt
