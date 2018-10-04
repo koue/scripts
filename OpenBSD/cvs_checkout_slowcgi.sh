@@ -6,3 +6,8 @@ else
 fi
 
 cvs -qd anoncvs@$SERVER:/cvs get -P src/usr.sbin/slowcgi
+###
+# create ChangeLog
+./_changelog.sh
+# remove CVS directories
+./_rmcvsdir.sh

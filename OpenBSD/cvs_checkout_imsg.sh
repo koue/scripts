@@ -12,5 +12,8 @@ cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libutil/imsg.h
 cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libutil/imsg_init.3
 # dependencies
 cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libc/stdlib/recallocarray.c
-
-#find src/ -type d -name CVS -exec rm -rf {} \;
+###
+# create ChangeLog
+./_changelog.sh
+# remove CVS directories
+./_rmcvsdir.sh

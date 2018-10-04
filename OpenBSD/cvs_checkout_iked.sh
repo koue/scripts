@@ -12,3 +12,8 @@ cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libutil/imsg-buffer.c
 cvs -qd anoncvs@$SERVER:/cvs get -P src/lib/libutil/imsg.h
 cvs -qd anoncvs@$SERVER:/cvs get -P src/sys/netinet/ip_ipsp.h
 cvs -qd anoncvs@$SERVER:/cvs get -P src/sys/net/pfkeyv2.h
+###
+# create ChangeLog
+./_changelog.sh
+# remove CVS directories
+./_rmcvsdir.sh

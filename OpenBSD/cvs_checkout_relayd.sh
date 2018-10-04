@@ -32,5 +32,8 @@ cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libc/stdlib/reallocarray.c
 cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libc/stdlib/recallocarray.c
 cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libc/asr/asr.c
 cvs -qd anoncvs@${SERVER}:/cvs get -P src/lib/libc/asr/asr_private.h
-#
-#find src/ -type d -name CVS -exec rm -rf {} \;
+###
+# create ChangeLog
+./_changelog.sh
+# remove CVS directories
+./_rmcvsdir.sh
