@@ -39,7 +39,7 @@ done
 cd src/
 [ ! -x ${CVS2CL} ] && echo "${CVS2CL} is missing or not executable " && exit 1
 # httpd project starts from 2014-07-13
-[ -d usr.sbin/httpd ] && STARTDATE="2014-07-13" || STARTDATE=""
+[ -d usr.sbin/httpd ] && STARTDATE="2014-07-12" || STARTDATE=""
 ${CVS2CL} -l "-d${STARTDATE}<${ENDDATE}"
 mv ChangeLog ../
 
