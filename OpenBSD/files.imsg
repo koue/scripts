@@ -1,0 +1,7 @@
+# libutil
+src/lib/libutil/imsg-buffer.c
+src/lib/libutil/imsg.c
+src/lib/libutil/imsg.h
+src/lib/libutil/imsg_init.3
+# dependencies
+src/lib/libc/stdlib/recallocarray.c
