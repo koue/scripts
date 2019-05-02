@@ -1,0 +1,7 @@
+First line.
+{{header}}
+{{#loop somearray item}}
+This is a {{item}}.
+{{/loop}}
+{{footer}}
+Last line.

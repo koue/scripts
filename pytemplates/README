@@ -1,0 +1,39 @@
+====
+Myte
+====
+
+A lightweight implementation of template parser for Python. Supports 'print',
+'loop' and 'if' functionality.
+
+Usage
+-----
+
+from myte import myte
+
+for line in myte.runme(commands_file, layout_file):
+    print line
+
+
+Example
+-------
+
+$ python example.py tests/commands.txt tests/more.txt
+
+Tests
+-----
+
+$ python -m pytest tests/
+
+TODO
+------
+
+*) Multiple commands per line
+*) Multiple input streams, currently supports files only
+
+License
+-------
+
+Distributed under the terms of BSD-2-Clause license, myte is free and open
+source software.
+
+https://opensource.org/licenses/BSD-2-Clause

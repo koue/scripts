@@ -1,0 +1,11 @@
+First line.
+{{#if header NOT Hello!}}
+show {{header}} more
+{{/if}}
+{{#loop somearray item}}
+{{#if item banana}}
+This is a {{item}}.
+{{/if}}
+{{/loop}}
+show {{footer}} more
+Last line.
