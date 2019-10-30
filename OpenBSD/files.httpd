@@ -4,16 +4,12 @@ src/usr.sbin/httpd
 src/usr.bin/htpasswd
 # httpd.conf
 src/etc/examples/httpd.conf
-#
+# libc
 src/include/blf.h
 src/lib/libc/crypt/bcrypt.c
 src/lib/libc/crypt/blowfish.c
 src/lib/libc/crypt/cryptutil.c
 src/lib/libc/gen/vis.c
-# libimsg
-src/lib/libutil/imsg-buffer.c
-src/lib/libutil/imsg.c
-src/lib/libutil/imsg.h
 # regress
 src/share/mk/bsd.regress.mk
 src/regress/usr.sbin/httpd
@@ -21,6 +17,5 @@ src/regress/usr.sbin/httpd
 src/lib/libevent
 src/include/asr.h
 src/lib/libc/stdlib/reallocarray.c
-src/lib/libc/stdlib/recallocarray.c
 src/lib/libc/asr/asr.c
 src/lib/libc/asr/asr_private.h
