@@ -13,9 +13,3 @@ src/lib/libc/gen/vis.c
 # regress
 src/share/mk/bsd.regress.mk
 src/regress/usr.sbin/httpd
-# libevent
-src/lib/libevent
-src/include/asr.h
-src/lib/libc/stdlib/reallocarray.c
-src/lib/libc/asr/asr.c
-src/lib/libc/asr/asr_private.h
