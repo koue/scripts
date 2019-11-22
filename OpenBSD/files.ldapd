@@ -1,0 +1,16 @@
+# ldapd
+src/usr.sbin/ldapd
+# ldapctl
+src/usr.sbin/ldapctl
+# ldapd.conf
+src/etc/examples/ldapd.conf
+# regress
+src/share/mk/bsd.regress.mk
+src/regress/usr.sbin/ldapd
+#
+src/lib/libutil/ber.h
+src/lib/libutil/ber.c
+#
+src/include/bsd_auth.h
+src/lib/libc/gen/auth_subr.c
+src/lib/libc/gen/authenticate.c
