@@ -1,0 +1,5 @@
+2020-10-20
+----------
+
+1. gtar should be installed. FreeBSD tar does not support -g (incremental) option.
+2. Run ./setup.sh and after that open backup's conf file to enter proper paths and values.
