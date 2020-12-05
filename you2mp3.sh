@@ -95,8 +95,8 @@ then
     then
         wget https://yt-dl.org/downloads/latest/youtube-dl -O youtube-dl
         chmod +x youtube-dl
-        YOUTUBEBIN="./youtube-dl"
     fi
+    YOUTUBEBIN="./youtube-dl"
 else
     YOUTUBEBIN="youtube-dl"
 fi
