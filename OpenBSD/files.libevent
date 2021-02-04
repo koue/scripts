@@ -5,3 +5,6 @@ src/lib/libc/stdlib/reallocarray.c
 src/lib/libc/stdlib/recallocarray.c
 src/lib/libc/asr/asr.c
 src/lib/libc/asr/asr_private.h
+# regress
+src/share/mk/bsd.regress.mk
+src/regress/lib/libevent
