@@ -29,21 +29,18 @@
  */
 
  /*
-					<p>
  					<span class="chunk" data-chord="Am">Show me </span>
 			 		<span class="chunk" data-chord="E">the money </span>
-					</p>
-					<p>
-					<p>
+					<br />
+					<br />
  [Am]Show me [E]the money		<span class="chunk" data-chord="G">Black </span>
  [G]Black [C]sheep [Am]wall		<span class="chunk" data-chord="C">sheep </span>
 				===>	<span class="chunk" data-chord="Am">wall</span>
- Show me the money			</p>
+ Show me the money			<br />
  Black sheep wall			<br />
-					<p>
 					<span>Show me the money</span><br />
 					<span>Black sheep wall</span><br />
-					</p>
+					<br />
 					<br />
  */
 
@@ -56,7 +53,7 @@ main(int argc, char *argv[])
 {
 	FILE *f;
 	char s[8192];
-	int start, paragraph = 1;
+	int chords = 0, line = 1;
 
 	if (argc != 2) {
 		printf("No input file\n");
@@ -68,26 +65,47 @@ main(int argc, char *argv[])
 		return (1);
 	}
 	while (fgets(s, sizeof(s), f)) {
-		if (strlen(s) == 1) {	// if empty line print '<br />'
-			if (paragraph == 0) { // close last '<p>'
-				printf("</p>\n");
+		if (line == 1) { // first line
+			if (strlen(s) < 2) { // missing title
+				fclose(f);
+				printf("Missing title\n");
+				return (1);
+			} else {
+				s[strlen(s) - 1] = 0; // chomp string
+				printf("<html>\n<head>\n");
+				printf("<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n");
+				printf("<title>%s</title>\n", s);
+				printf("<link rel=\"stylesheet\" type=\"text/css\" href=\"chords.css\" />\n");
+				printf("</head>\n<body>\n<a href=\"index.html\">index.html</a><br />\n");
+				printf("<hr>\n<b>%s</b><br />\n", s);
 			}
-			printf("<br />\n");
-			paragraph = 1; // open new '<p>'
+			line++;
 			continue;
 		}
-		else {
-			if (paragraph) // open new '<p>'
-				printf("<p>\n");
+		if (line == 2) {
+			if (strlen(s) == 1) { // second line is empty
+				printf("<br />\n");
+			} else {
+				s[strlen(s) - 1] = 0; // chomp string
+				printf("<i>%s</i><br />\n", s); // additional info
+			}
+			line++;
+			continue;
+		}
+		if (strlen(s) == 1) {	// empty line
+			if (chords == 0) // no chords in previous line
+				printf("<br />\n");
+			line++;
+			continue;
 		}
 		char *a, *b;
-		start = 0;
+		chords = 0;
 		if (s[0])
 			s[strlen(s) - 1] = 0; // chomp string
-		for (a = s; (b = strstr(a, "[")) != NULL; start++) {
+		for (a = s; (b = strstr(a, "[")) != NULL; chords++) {
 			*b = 0;
 			if (strlen(a)) {
-				if (start == 0) // first char is not chord
+				if (chords == 0) // first char is not chord
 					printf("<span>");
 				printf("%s</span>\n", a);
 			}
@@ -99,16 +117,14 @@ main(int argc, char *argv[])
 				a = b + 1;
 			}
 		}
-		if (start == 0) // no chord in line
+		if (chords == 0) // no chord in line
 			printf("<span>");
-		printf("%s</span>", a);
-		if (start == 0) { // no chord in line
+		printf("%s</span>\n<br />\n", a);
+		if (chords > 0)
 			printf("<br />\n");
-			paragraph = 0; // don't close '<p>'
-		}
-		else // close '<p>'
-			printf("\n</p>\n");
+		line++;
 	}
+	printf("<hr>\n</body>\n</html>\n");
 	fclose(f);
 
 	return (0);

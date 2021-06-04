@@ -1,0 +1,9 @@
+span.chunk {
+ position:relative;
+}
+span.chunk:before {
+  content:attr(data-chord);
+  position:absolute;
+  top:-15px;
+  color: red;
+}
