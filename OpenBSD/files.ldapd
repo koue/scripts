@@ -1,3 +1,5 @@
+# ldap
+src/usr.bin/ldap
 # ldapd
 src/usr.sbin/ldapd
 # ldapctl
