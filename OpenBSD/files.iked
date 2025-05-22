@@ -1,7 +1,0 @@
-# iked
-src/sbin/iked
-# ikectl
-src/usr.sbin/ikectl
-# sys
-src/sys/netinet/ip_ipsp.h
-src/sys/net/pfkeyv2.h
