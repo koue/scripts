@@ -1,0 +1,6 @@
+src/usr.bin/mandoc
+#
+src/lib/libc/stdlib/recallocarray.c
+#
+src/lib/libutil/ohash.c
+src/lib/libutil/ohash.h
