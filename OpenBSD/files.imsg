@@ -1,5 +1,10 @@
 # libutil
+src/lib/libutil/ibuf_add.3
 src/lib/libutil/imsg-buffer.c
 src/lib/libutil/imsg.c
 src/lib/libutil/imsg.h
 src/lib/libutil/imsg_init.3
+# regress
+src/share/mk/bsd.regress.mk
+src/regress/lib/libutil/imsg/Makefile
+src/regress/lib/libutil/imsg/ibuf_test.c
