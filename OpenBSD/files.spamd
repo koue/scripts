@@ -1,2 +1,6 @@
 # spamd
 src/libexec/spamd
+# spamd-setup
+src/libexec/spamd-setup
+# spamdb
+src/usr.sbin/spamdb
