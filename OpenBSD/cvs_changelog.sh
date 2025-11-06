@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ### conf
-PROGS="dhcpd httpd imsg ldapd libevent slowcgi"
+PROGS="dhcpd httpd imsg ldapd libevent slowcgi spamd nsd"
 CVSSERVER=${2:-ftp.hostserver.de}
 CVSUSER=${3:-anoncvs}
 CVSDIR=CVSDIR
